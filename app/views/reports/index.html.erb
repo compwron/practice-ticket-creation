@@ -1,0 +1,131 @@
+<h1><%= t(".export_page_title") %></h1>
+
+<div class="card card-container my-4">
+  <div class="card-body">
+    <%= form_with url: mileage_reports_path(format: :csv), method: :get do |f| %>
+        <%= f.submit t(".download_mileage_report_button.enabled"), class: "btn btn-primary report-form-submit",
+         data: {disable_with: t(".download_mileage_report_button.disabled")} %>
+    <% end %>
+  </div>
+</div>
+
+<div class="card card-container">
+  <div class="card-body">
+    <h5 class="card-title"><strong><%= t(".reports_subhead") %></strong></h5>
+    <p class="card-text">
+      <%= t(".reports_description") %>
+    </p>
+
+    <hr>
+
+    <%= form_with url: case_contact_reports_path(format: :csv), scope: 'report', method: :get, local: true do |f| %>
+      <div class="field form-group">
+        <label><strong><%= t(".start_date_label") %></strong></label>
+        <%= f.text_field :start_date, value: 6.months.ago.strftime(::DateHelper::RUBY_MONTH_DAY_YEAR_FORMAT),
+                                      data: { provide: "datepicker",
+                                      date_format: ::DateHelper::JQUERY_MONTH_DAY_YEAR_FORMAT },
+                                      class: "form-control" %>
+      </div>
+
+      <div class="field form-group">
+        <label><strong><%= t(".end_date_label") %></strong></label>
+        <%= f.text_field :end_date, value: Date.today.strftime(::DateHelper::RUBY_MONTH_DAY_YEAR_FORMAT),
+                                    data:{ provide: "datepicker",
+                                    date_format: ::DateHelper::JQUERY_MONTH_DAY_YEAR_FORMAT },
+                                    class: "form-control" %>
+      </div>
+
+      <% if current_user&.casa_admin? || current_user&.supervisor? %>
+        <div class="field form-group">
+          <label><strong><%= t(".assigned_to_label") %></strong></label>
+          <%= f.collection_select(
+                  :supervisor_ids,
+                  Supervisor.where(casa_org: current_user.casa_org),
+                  :id, :display_name,
+                  {include_hidden: false},
+                  {class: "form-control select2",
+                   data: {placeholder: t(".select_supervisors_placeholder")},
+                   multiple: true}
+              ) %>
+        </div>
+
+        <div class="field form-group">
+          <label><strong><%= t(".volunteers_label") %></strong></label>
+          <%= f.collection_select(
+                  :creator_ids,
+                  Volunteer.where(casa_org: current_user.casa_org),
+                  :id,
+                  :display_name,
+                  {include_hidden: false},
+                  {class: "form-control select2", data: {placeholder: t(".select_volunteers_placeholder")},
+multiple: true}
+              ) %>
+        </div>
+
+        <div class="field form-group">
+          <label><strong><%= t(".contact_type_label") %></strong></label>
+          <%= f.collection_select(
+                  :contact_type_ids,
+                  ContactType.for_organization(current_user.casa_org),
+                  :id,
+                  :name,
+                  {include_hidden: false},
+                  {class: "form-control select2", data: {placeholder: t(".select_contact_types_placeholder")},
+multiple: true}
+              ) %>
+        </div>
+
+        <div class="field form-group">
+          <label><strong><%= t(".contact_type_group_label") %></strong></label>
+          <%= f.collection_select(
+                  :contact_type_group_ids,
+                  ContactTypeGroup.for_organization(current_user.casa_org),
+                  :id,
+                  :name,
+                  {include_hidden: false},
+                  {class: "form-control select2", data: {placeholder: t(".select_contact_type_groups_placeholder")},
+multiple: true}
+              ) %>
+        </div>
+
+        <div class="field form-group">
+          <label><strong><%= t(".driving_reimbursement_label") %></strong></label>
+          <%= f.collection_radio_buttons :want_driving_reimbursement, boolean_choices, :last, :first do |b| %>
+            <div class="form-check">
+              <%= b.radio_button(class: "form-check-input") %>
+              <%= b.label(class: "form-check-label") %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="field form-group">
+          <label><strong><%= t(".contact_made_label") %></strong></label>
+          <%= f.collection_radio_buttons :contact_made, boolean_choices, :last, :first do |b| %>
+            <div class="form-check">
+              <%= b.radio_button(class: "form-check-input") %>
+              <%= b.label(class: "form-check-label") %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="field form-group">
+          <label><strong><%= t(".transition_aged_label") %></strong></label>
+          <%= f.collection_radio_buttons :has_transitioned, boolean_choices, :last, :first do |b| %>
+            <div class="form-check">
+              <%= b.radio_button(class: "form-check-input") %>
+              <%= b.label(class: "form-check-label") %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= render 'filter', form: f %>
+      <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#filterColumns">
+        <%= t(".filter_cols") %>
+      </button>
+
+      <%= f.submit t(".download_report_button"), class: "btn btn-primary", data: {disable_with: false} %>
+    <% end %>
+
+  </div>
+</div>

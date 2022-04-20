@@ -1,0 +1,70 @@
+{
+  "all_casa_admin.css": "/packs/css/all_casa_admin-7f464ab8.css",
+  "all_casa_admin.css.map": "/packs/css/all_casa_admin-7f464ab8.css.map",
+  "all_casa_admin.js": "/packs/js/all_casa_admin-e1cd355577c3df661ed3.js",
+  "all_casa_admin.js.map": "/packs/js/all_casa_admin-e1cd355577c3df661ed3.js.map",
+  "application.css": "/packs/css/application-ff0e19c6.css",
+  "application.css.map": "/packs/css/application-ff0e19c6.css.map",
+  "application.js": "/packs/js/application-4b0b3adbc68661ffdcf8.js",
+  "application.js.map": "/packs/js/application-4b0b3adbc68661ffdcf8.js.map",
+  "entrypoints": {
+    "all_casa_admin": {
+      "css": [
+        "/packs/css/all_casa_admin-7f464ab8.css"
+      ],
+      "js": [
+        "/packs/js/all_casa_admin-e1cd355577c3df661ed3.js"
+      ],
+      "css.map": [
+        "/packs/css/all_casa_admin-7f464ab8.css.map"
+      ],
+      "js.map": [
+        "/packs/js/all_casa_admin-e1cd355577c3df661ed3.js.map"
+      ]
+    },
+    "application": {
+      "css": [
+        "/packs/css/application-ff0e19c6.css"
+      ],
+      "js": [
+        "/packs/js/application-4b0b3adbc68661ffdcf8.js"
+      ],
+      "css.map": [
+        "/packs/css/application-ff0e19c6.css.map"
+      ],
+      "js.map": [
+        "/packs/js/application-4b0b3adbc68661ffdcf8.js.map"
+      ]
+    }
+  },
+  "media/images/sort_asc.png": "/packs/media/images/sort_asc-4bba5919.png",
+  "media/images/sort_asc_disabled.png": "/packs/media/images/sort_asc_disabled-07c018ae.png",
+  "media/images/sort_both.png": "/packs/media/images/sort_both-8b117faa.png",
+  "media/images/sort_desc.png": "/packs/media/images/sort_desc-c4196d32.png",
+  "media/images/sort_desc_disabled.png": "/packs/media/images/sort_desc_disabled-27ac5d1b.png",
+  "media/src/images/android-icon-192x192.png": "/packs/media/src/images/android-icon-192x192-d2cc3123556ece0b79646e3181001fb9.png",
+  "media/src/images/apple-icon-114x114.png": "/packs/media/src/images/apple-icon-114x114-5f095e6ca6fc6aa53778cf0d4497ab7f.png",
+  "media/src/images/apple-icon-120x120.png": "/packs/media/src/images/apple-icon-120x120-2a0ef04e9bea8e308a9af71bfc6e7bda.png",
+  "media/src/images/apple-icon-144x144.png": "/packs/media/src/images/apple-icon-144x144-3023e93d3a543dc442b35306b1ce9f1d.png",
+  "media/src/images/apple-icon-152x152.png": "/packs/media/src/images/apple-icon-152x152-5c5a3587e3d044ea59caa31151bcb7cb.png",
+  "media/src/images/apple-icon-180x180.png": "/packs/media/src/images/apple-icon-180x180-a0abc77aacef574312f832a99d8bb930.png",
+  "media/src/images/apple-icon-57x57.png": "/packs/media/src/images/apple-icon-57x57-a250dd3f89e960f8c383899484875ffb.png",
+  "media/src/images/apple-icon-60x60.png": "/packs/media/src/images/apple-icon-60x60-b9e4d20bad3239a37897db88aa76f86e.png",
+  "media/src/images/apple-icon-72x72.png": "/packs/media/src/images/apple-icon-72x72-4832b6c811e3c86e5c8e10a84f8b823d.png",
+  "media/src/images/apple-icon-76x76.png": "/packs/media/src/images/apple-icon-76x76-bf554cae385949a35a8a49fb23ee93bd.png",
+  "media/src/images/default-logo.png": "/packs/media/src/images/default-logo-040d65f39e4f0ddf1f538d0cd5b8a3c2.png",
+  "media/src/images/default-logo.svg": "/packs/media/src/images/default-logo-881c2544f53bf904b376d79e4298ac6b.svg",
+  "media/src/images/favicon-16x16.png": "/packs/media/src/images/favicon-16x16-e74129d27fdd02418e6dc462da257936.png",
+  "media/src/images/favicon-32x32.png": "/packs/media/src/images/favicon-32x32-1ed6e652ecc2fca47498debc466cf93b.png",
+  "media/src/images/favicon-96x96.png": "/packs/media/src/images/favicon-96x96-4b4e71f8711313fe88cd12bce3fcc989.png",
+  "media/src/images/icon-logo.png": "/packs/media/src/images/icon-logo-4bf92c06280370223dc4edc384b7357e.png",
+  "media/src/images/login.jpg": "/packs/media/src/images/login-d670ba559bc9e95482f79f02829d3d88.jpg",
+  "media/src/images/logo.png": "/packs/media/src/images/logo-85e2e49e5b2ffb16694e3920569843a6.png",
+  "media/src/images/ms-icon-144x144.png": "/packs/media/src/images/ms-icon-144x144-3023e93d3a543dc442b35306b1ce9f1d.png",
+  "media/src/images/rfglogo.png": "/packs/media/src/images/rfglogo-5755b61c6dfca12c153e02e2e05ae1d0.png",
+  "media/webfonts/fa-solid-900.eot": "/packs/media/webfonts/fa-solid-900-9bbb245e.eot",
+  "media/webfonts/fa-solid-900.svg": "/packs/media/webfonts/fa-solid-900-7a8b4f13.svg",
+  "media/webfonts/fa-solid-900.ttf": "/packs/media/webfonts/fa-solid-900-be9ee23c.ttf",
+  "media/webfonts/fa-solid-900.woff": "/packs/media/webfonts/fa-solid-900-eeccf4f6.woff",
+  "media/webfonts/fa-solid-900.woff2": "/packs/media/webfonts/fa-solid-900-1551f4f6.woff2"
+}

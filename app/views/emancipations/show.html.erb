@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-sm-12 dashboard-table-header">
+    <h3>
+      <%= t(".title") %>
+    </h3>
+      <%= link_to @current_case.case_number, casa_case_path(@current_case) %>
+      <span class="d-block float-md-right my-2 mt-md-0 text-center">
+        <%= link_to "Download Checklist", casa_case_emancipation_path(@current_case, format: :docx),
+class: "btn btn-primary" %>
+      </span>
+  </div>
+</div>
+
+<div class="card card-container">
+  <div class="card-body">
+    <% @emancipation_form_data.each do |category| %>
+      <div>
+        <h6 class="emancipation-category no-select">
+          <input
+            type="checkbox"
+            class="emancipation-category-check-box"
+            value="<%= category.id %>"
+            <%= emancipation_category_checkbox_checked(@current_case, category) %>>
+          <label><%= category.name %></label>
+          <% if category.emancipation_options.count > 0 %>
+            <span><%= emancipation_category_collapse_icon(@current_case, category) %></span>
+          <% end %>
+        </h6>
+        <div
+          class="category-options"
+          style="<%= emancipation_category_collapse_hidden(@current_case, category) %>">
+          <% category.emancipation_options.each do |option| %>
+            <div class="check-item">
+            <% if category.mutually_exclusive %>
+              <input
+                type="radio"
+                id="O<%= option.id %>"
+                class="emancipation-radio-button"
+                name="C<%= category.id %>"
+                value="<%= option.id %>"
+                <%= emancipation_option_checkbox_checked(@current_case, option) %>>
+            <% else %>
+              <input
+                type="checkbox"
+                id="O<%= option.id %>"
+                class="emancipation-option-check-box"
+                value="<%= option.id %>"
+                <%= emancipation_option_checkbox_checked(@current_case, option) %>>
+            <% end %>
+            <label><%= option.name %></label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div id="async-notifications">
+  <div id="async-waiting-indicator" style="display: none">
+    <%= t(".state.saving") %> <div class="load-spinner"></div>
+  </div>
+  <div id="async-success-indicator" class="async-success-indicator" style="display: none">
+    <%= t(".state.saved") %>
+  </div>
+</div>

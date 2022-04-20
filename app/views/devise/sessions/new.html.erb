@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col p-0">
+      <div class="container d-flex flex-column w-75 h-100 py-5 py-lg-0 px-0 px-xl-5 justify-content-center">
+          <h2 class="mb-4">Log in</h2>
+
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="field form-group">
+              <%= f.label :email %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true %>
+            </div>
+
+            <div class="field form-group">
+              <%= f.label :password %>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control", required: true %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "Log in", class: "btn btn-info" %>
+            </div>
+          <% end %>
+
+          <div class="my-4">
+            <%= render "devise/shared/links" %>
+          </div>
+      </div>
+    </div>
+
+    <div class="col col-xl-7 p-0 d-none d-lg-block">
+      <aside class="display-image"></aside>
+    </div>
+  </div>
+</div>

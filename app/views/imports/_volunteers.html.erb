@@ -1,0 +1,35 @@
+<div class="mb-3">
+  <h4>
+    1.
+    <%= link_to "/volunteers.csv", format: :csv, download: "volunteers.csv" do %>
+      <%= t(".button.download") %>
+      <i class="fa fa-file-download"></i>
+    <% end %>
+  </h4>
+</div>
+
+<div class="mb-3">
+  <h4>
+    2. <%= t(".upload_title") %>
+    <i class="fa fa-file-csv" aria-hidden="true"></i>
+  </h4>
+  <%= form_with(url: imports_path, local: :true) do |f| %>
+    <%= f.hidden_field :import_type, value: "volunteer" %>
+    <ul>
+      <li><%= t(".instruction.click") %></li>
+      <li><strong><%= t(".instruction.do_not") %></strong> <%= t(".instruction.change_values") %></li>
+      <li><%= t(".instruction.import") %> <strong><%= t(".instruction.note") %></strong></li>
+    </ul>
+    <%= f.file_field :file, id: 'volunteer-file', accept: 'text/csv', class: 'form-control-file', style: "margin: auto;" %>
+    </div>
+    <%= button_tag id: "volunteer-import-button", class: "btn btn-md btn-success pull-right",
+                   disabled: true, data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> #{t(".disable_with")}"} do %>
+      <i class="fa fa-upload"></i> <%= t(".button.import") %>
+    <% end %>
+
+    <script type="text/javascript">
+      document.getElementById('volunteer-file').addEventListener('change', function (event) {
+        document.getElementById('volunteer-import-button').disabled = (event.target.value == '')
+      })
+    </script>
+  <% end %>

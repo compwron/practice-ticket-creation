@@ -1,0 +1,161 @@
+<div class="card card-container">
+  <div class="card-body">
+    <%= form_with(model: casa_case, local: true) do |form| %>
+      <%= render "/shared/error_messages", resource: casa_case %>
+
+      <% if casa_case.active %>
+        <div class="top-page-actions pull-right">
+          <%= form.submit casa_case.persisted? ? t(".button.update") : t(".button.create"), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+      <% if casa_case.new_record? || policy(casa_case).update_case_number? %>
+        <div class="field form-group">
+          <%= form.label :case_number, t(".case_number") %>
+          <%= form.text_field :case_number, class: "form-control w-25", :required=> 'required' %>
+        </div>
+      <% end %>
+
+      <h2><%= form.label :court_details, t(".court_details") %></h2>
+
+      <% if policy(casa_case).update_birth_month_year_youth? %>
+        <div class="field form-group">
+          <%= form.label :birth_month_year_youth, t(".youth_birth_month_year") %>
+          <br>
+          <span class="datetime-year-month">
+            <%= form.date_select :birth_month_year_youth,
+                                 {
+                                     order: [:month, :year],
+                                     start_year: Date.current.year,
+                                     end_year: 1989,
+                                     prompt: {month: t("common.month"), year: t("common.year")},
+                                     discard_day: true
+                                 }, class: "select2 date-input" %>
+          </span>
+        </div>
+      <% end %>
+
+      <% if policy(casa_case).update_hearing_type? %>
+        <div class="field form-group">
+          <%= form.label :hearing_type_id, t(".hearing_type") %>
+          <%= form.collection_select(
+                  :hearing_type_id,
+                  HearingType.active.for_organization(current_organization),
+                  :id, :name,
+                  {include_hidden: false, include_blank: t(".prompt.select_hearing_type")},
+                  {class: "form-control"}
+              ) %>
+        </div>
+      <% end %>
+
+      <% if Judge.for_organization(current_organization).any? %>
+        <% if policy(casa_case).update_judge? %>
+          <div class="field form-group">
+            <%= form.label :judge_id, t(".judge") %>
+            <%= form.collection_select(
+                    :judge_id,
+                    Judge.for_organization(current_organization),
+                    :id, :name,
+                    {include_hidden: false, include_blank: t(".prompt.select_judge")},
+                    {class: "form-control"}
+                ) %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if policy(casa_case).update_court_date? && casa_case.new_record? %>
+        <%= form.fields_for :court_dates, casa_case.court_dates.new do |cdf| %>
+          <div class="field form-group">
+            <%= cdf.label :date, t(".court_date") %>
+            <br>
+            <div class="field form-group">
+              <%= cdf.text_field :date,
+                              data: {provide: "datepicker", date_format: "yyyy/mm/dd"},
+                              class: "form-control",
+                              :required=> 'required' %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <div class="field form-group">
+        <% if policy(casa_case).update_court_report_due_date? %>
+          <%= form.label :court_report_due_date, t(".court_report_due_date") %>
+          <br>
+          <div class="field form-group">
+            <% court_report_due_date = casa_case.court_report_due_date || Time.zone.now %>
+            <%= form.text_field :court_report_due_date,
+                            value: court_report_due_date.to_date,
+                            data: {provide: "datepicker", date_format: "yyyy/mm/dd"},
+                            class: "form-control" %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label :court_report_status, t(".court_report_status") %>
+        <%= form.select :court_report_status,
+                        CasaCase.court_report_statuses&.map { |status| [status.first.humanize, status.first] } %>
+      </div>
+
+      <% if casa_case.persisted? %>
+        <div class="field form-group court-mandates">
+          <% if policy(casa_case).update_court_orders? %>
+            <%= render partial: "shared/court_order_list", locals: {casa_case: @casa_case, form: form} %>
+          <% else %>
+            <%= form.label :case_court_mandates, t(".label.court_orders") %>
+            <div id="mandate-list-container">
+              <% @casa_case.case_court_orders.each do |order| %>
+                <div class="court-mandate-entry">
+                  <textarea disabled><%= order.text %></textarea>
+
+                  <% if order.implementation_status %>
+                    <p class="implementation-status">
+                      <strong>Status:</strong>
+                      <%= order.implementation_status.humanize %>
+                    </p>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="field form-group past-court-dates">
+          <%= render "court_dates", casa_case: @casa_case %>
+        </div>
+      <% end %>
+
+      <% if Pundit.policy(current_user, casa_case).update_contact_types? %>
+        <%= render "case_contacts/contact_types",
+            form: form,
+            model: casa_case,
+            contact_type_groups: @contact_types.map(&:contact_type_group).sort_by(&:name).uniq,
+            selected_case_contact_types: [],
+            checkbox_tag_name: "casa_case[casa_case_contact_types_attributes][][contact_type_id]" %>
+      <% end %>
+
+      <br>
+
+      <div class="actions">
+        <% if casa_case.active %>
+          <%= form.submit casa_case.persisted? ? t(".button.update") : t(".button.create"), class: "btn btn-primary" %>
+          <%= link_to(t(".button.deactivate"),
+                      deactivate_casa_case_path(casa_case),
+                      method: :patch,
+                      class: "btn btn-outline-danger pull-right",
+                      data: {
+                          confirm_swal: t(".prompt.deactivate.confirm_swal"),
+                          reload: true,
+                          success: t(".prompt.deactivate.success"),
+                          fail: t(".prompt.deactivate.fail")
+                      }) if Pundit.policy(current_user, casa_case).update_case_status? && casa_case.persisted? %>
+        <% else %>
+          <%= link_to(t(".button.reactivate"),
+                      reactivate_casa_case_path(casa_case),
+                      method: :patch,
+                      class: "btn btn-primary") if Pundit.policy(current_user, casa_case).update_case_status? %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

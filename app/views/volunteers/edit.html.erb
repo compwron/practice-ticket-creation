@@ -1,0 +1,37 @@
+<%= link_to 'Back', volunteers_path %>
+
+<div class="row">
+  <div class="col-sm-12 form-header">
+    <h1>Editing Volunteer</h1>
+    <%= render "volunteer_reminder_form", volunteer: @volunteer %>
+  </div>
+  <div class="col-sm-12 form-header">
+    <%= link_to "Impersonate", impersonate_volunteer_path(@volunteer),
+      class: "btn btn-primary casa-case-button" %>
+  </div>
+</div>
+<div class="card card-container">
+  <div class="card-body">
+    <%= form_for @volunteer, url: volunteer_path(@volunteer) do |form| %>
+      <%= render "/shared/error_messages", resource: @volunteer %>
+
+      <%= render "/shared/edit_form", resource: @volunteer, f: form %>
+
+      <%= render "/shared/invite_login", resource: @volunteer %>
+
+      <p>
+        <%= render "manage_active", user: @volunteer %>
+      </p>
+
+      <div class="actions">
+        <%= form.submit t("button.submit"), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'notes' %>
+
+<%= render 'manage_cases' %>
+
+<%= render 'manage_supervisor' %>
